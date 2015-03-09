@@ -47,6 +47,12 @@ public class HTTPURLConnectionExample {
 		// 3. success then go to gmail.
 		String result = http.GetPageContent(websiteUrl);
 		System.out.println(result);
+		
+		Thread.sleep(10000);
+		
+		result = http.GetPageContent(websiteUrl);
+		System.out.println(result);
+		
 	}
 
 	private void sendPost(String url, String postParams) throws Exception {
@@ -104,7 +110,9 @@ public class HTTPURLConnectionExample {
 
 		URL obj = new URL(url);
 		conn = (HttpsURLConnection) obj.openConnection();
-
+		
+		conn.setChunkedStreamingMode(10000);
+		conn.setDoOutput(true);
 		// default is GET
 		conn.setRequestMethod("GET");
 
@@ -113,8 +121,8 @@ public class HTTPURLConnectionExample {
 		// act like a browser
 		conn.setRequestProperty("User-Agent", USER_AGENT);
 		conn.setRequestProperty("Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-		conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+				"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+		conn.setRequestProperty("Accept-Language", "en-US,en;q=0.8,en-GB;q=0.6");
 		if (cookies != null) {
 			for (String cookie : this.cookies) {
 				conn.addRequestProperty("Cookie", cookie.split(";", 1)[0]);
